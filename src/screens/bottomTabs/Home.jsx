@@ -94,7 +94,7 @@ const Home = ({ navigation }) => {
   // 👇 Later API call pannும்போது products state varum
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }} edges={["top"]}>
       <StatusBar barStyle={"dark-content"} />
 
       <View style={styles.container}>
