@@ -4,4 +4,6 @@ export const Images = {
   num3: require("../assets/images/Three.png"),
   google: require("../assets/images/google.png"),
   logo: require("../../assets/images/splash.png"),
+  Start: require("../assets/images/Start.png"),
+  profile: require("../assets/images/profile.png"),
 };

@@ -86,7 +86,7 @@ const OnboardScreen = ({ navigation }) => {
     if (currentIndex < data.length - 1) {
       flatListRef.current.scrollToIndex({ index: currentIndex + 1 });
     } else {
-      navigation.navigate("LoginScreen");
+      navigation.replace("LoginScreen");
     }
   };
 

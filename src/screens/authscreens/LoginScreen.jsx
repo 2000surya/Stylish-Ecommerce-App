@@ -62,7 +62,8 @@ const LoginScreen = ({ navigation }) => {
     try {
       await signInWithEmailAndPassword(auth, userName.trim(), passValue);
       console.log("Login success!");
-      navigation.replace("Home");
+      setDisable(true);
+      navigation.replace("GetStart");
     } catch (error) {
       setDisable(false);
       console.log(error);

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { StatusBar, StyleSheet, Text, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Toast from "react-native-toast-message";
 import AuthHeader from "../../components/AuthHeader";
 import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
@@ -92,7 +93,7 @@ const SignUp = ({ navigation }) => {
         text2: "Welcome aboard 🎉",
       });
 
-      // navigation.replace("Home");
+      navigation.replace("GetStart");
     } catch (error) {
       setDisable(false);
 
