@@ -16,12 +16,12 @@ const Rating = ({ rating }) => {
               rating >= starNumber
                 ? "star" // full star
                 : rating >= starNumber - 0.5
-                ? "star-half" // you can replace with half-star lib if needed
-                : "star-half" // empty star
+                ? "star-half-empty" // you can replace with half-star lib if needed
+                : "star-o" // empty star
             }
             size={16}
             color="#FFD700" // gold color
-            style={{ marginRight: 2 }}
+            style={{ marginRight: 4 }}
           />
         );
       })}
