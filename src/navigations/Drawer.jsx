@@ -4,15 +4,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import CustomDrawer from "../components/CustomDrawer";
 import BottomTab from "./BottomTab";
 
-const Drawer = () => {
-  const DrawerNav = createDrawerNavigator();
+const DrawerNav = createDrawerNavigator();
 
+const Drawer = () => {
   return (
     <SafeAreaView style={{ flex: 1 }} edges={["bottom"]}>
       <DrawerNav.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
+        initialRouteName="HomeTabs"
+        screenOptions={{ headerShown: false }}
         drawerContent={(props) => <CustomDrawer {...props} />}
       >
         <DrawerNav.Screen name="HomeTabs" component={BottomTab} />

@@ -1,9 +1,11 @@
 import { Dimensions } from "react-native";
+
+import { Colors } from "./Colors";
 const { width, height } = Dimensions.get("window");
 export const GlobalStyles = {
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: Colors.bg,
   },
   row: {
     flexDirection: "row",
@@ -14,12 +16,12 @@ export const GlobalStyles = {
     paddingHorizontal: 20,
   },
   shadowProperty: {
-    elevation: 3,
+    elevation: 5, // reduce
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    backgroundColor: "#fff",
+    shadowOffset: { width: 0, height: 1 }, // smaller shadow
+    shadowOpacity: 0.1, // very light
+    shadowRadius: 2,
+    backgroundColor: "white",
   },
   size: { width, height },
 };

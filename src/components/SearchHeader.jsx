@@ -1,26 +1,50 @@
 import { EvilIcons, Feather, MaterialCommunityIcons } from "@expo/vector-icons";
-import { FlatList, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  FlatList,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import { Colors } from "../constants/Colors";
 import { FontSizes } from "../constants/FontSize";
 import { GlobalStyles } from "../constants/GlobalStyles";
 import Banner from "./Banner";
 import RenderCategory from "./RenderCatagory";
 
-const SearchBar = ({ value, setValue, categories }) => {
+const SearchBar = ({
+  value,
+  setValue,
+  categories,
+  navigation,
+  editable = false,
+}) => {
   return (
     <View>
-      <View style={[GlobalStyles.row, styles.searchContainer]}>
-        <EvilIcons name="search" size={20} color="gray" />
-        <TextInput
-          placeholder="Search any Product.."
-          value={value}
-          onChangeText={(text) => setValue(text)}
-          style={styles.inputStyle}
-          placeholderTextColor={"gray"}
-          returnKeyType="search"
-        />
-        <Feather name="mic" size={20} color="gray" />
-      </View>
+      <Pressable
+        onPress={() => navigation.navigate("Search")}
+        // style={{ flex: 1 }}
+        // android_ripple={null} // ✅ ripple effect remove
+        // android_disableSound={true}
+      >
+        <View
+          style={[GlobalStyles.row, styles.searchContainer]}
+          pointerEvents="none"
+        >
+          <EvilIcons name="search" size={20} color="gray" />
+          <TextInput
+            placeholder="Search any Product.."
+            value={value}
+            onChangeText={(text) => setValue(text)}
+            style={styles.inputStyle}
+            placeholderTextColor={"gray"}
+            returnKeyType="search"
+            editable={editable}
+          />
+          <Feather name="mic" size={20} color="gray" />
+        </View>
+      </Pressable>
 
       <View style={styles.featureContainer}>
         <Text style={styles.allFeatureText}>All Featured</Text>

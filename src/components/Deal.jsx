@@ -1,3 +1,4 @@
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import {
   FlatList,
@@ -7,23 +8,27 @@ import {
   Text,
   View,
 } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import { GlobalStyles } from "../constants/GlobalStyles";
+import { toggleFav } from "../redux/slice/FavouriteSlice";
+import { discountPrice } from "../utilis/DiscountPrice";
 import Rating from "./Rating";
 
-const DealCard = ({ item, index, total }) => {
-  // ✅ Cart data-a? Products array la irukku — first product எடு
-  // ✅ Product data-a? Direct-a use பண்ணு
-  const isCartItem = !!item?.products; // products array irundha = cart item
+const DealCard = ({ item, index, total, hideRating, onPress }) => {
+  const isCartItem = !!item?.products;
+  const product = isCartItem ? item.products?.[0] : item;
 
-  const product = isCartItem ? item.products[1] : item;
+  if (!product) return null;
 
-  // ✅ Discount price calculate
   const originalPrice = product?.price ?? 0;
   const discountPercent = product?.discountPercentage ?? 0;
-  const discountedPrice = (
-    originalPrice -
-    (originalPrice * discountPercent) / 100
-  ).toFixed(2);
+
+  const dispatch = useDispatch();
+
+  // ✅ check if this product is in favourites
+  const isFav = useSelector((state) =>
+    state.favourite.favourites.some((f) => f.id === product.id)
+  );
 
   return (
     <Pressable
@@ -35,10 +40,16 @@ const DealCard = ({ item, index, total }) => {
           marginEnd: index === total - 1 ? 10 : 0,
         },
       ]}
+      onPress={() => onPress?.(product)}
     >
       {/* Image */}
       <View style={styles.imageWrapper}>
-        <Image source={{ uri: product?.thumbnail }} style={styles.imageStyle} />
+        <Image
+          source={{
+            uri: product?.thumbnail || "https://via.placeholder.com/300",
+          }}
+          style={styles.imageStyle}
+        />
       </View>
 
       {/* Discount Badge */}
@@ -48,42 +59,54 @@ const DealCard = ({ item, index, total }) => {
         </View>
       )}
 
+      {/* ✅ Heart Icon — top left, above image */}
+      <Pressable
+        style={styles.heartIcon}
+        onPress={() => dispatch(toggleFav(product))}
+      >
+        <FontAwesome
+          name={isFav ? "heart" : "heart-o"}
+          size={20}
+          color={isFav ? "red" : "#aaa"}
+        />
+      </Pressable>
+
       {/* Content */}
       <View style={styles.content}>
-        {/* Title */}
         <Text style={styles.title} numberOfLines={2}>
           {product?.title}
         </Text>
-
-        {/* Description */}
         <Text style={styles.description} numberOfLines={3}>
           {product?.description}
         </Text>
-
-        {/* Price Row */}
         <View style={styles.priceRow}>
-          {/* Discounted Price — big */}
-          <Text style={styles.discountedPrice}>₹ {discountedPrice}</Text>
-
-          {/* Original Price — strikethrough */}
+          <Text style={styles.discountedPrice}>
+            ₹ {discountPrice(originalPrice, discountPercent)}
+          </Text>
           <Text style={styles.originalPrice}>₹ {originalPrice}</Text>
         </View>
-
-        {/* Rating */}
-        <Rating rating={product?.rating} />
+        {!hideRating && <Rating rating={product?.rating} />}
       </View>
     </Pressable>
   );
 };
 
-const Deal = ({ data }) => {
+const Deal = ({ data = [], hideRating = false, onPress }) => {
   return (
     <View>
       <FlatList
         data={data}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item, index) =>
+          item?.id ? item.id.toString() : index.toString()
+        }
         renderItem={({ item, index }) => (
-          <DealCard item={item} index={index} total={data.length} />
+          <DealCard
+            item={item}
+            index={index}
+            total={data.length}
+            hideRating={hideRating}
+            onPress={onPress}
+          />
         )}
         horizontal
         nestedScrollEnabled
@@ -91,9 +114,9 @@ const Deal = ({ data }) => {
         contentContainerStyle={{ paddingVertical: 30 }}
       />
 
-      {/* Forward Arrow */}
+      {/* Arrow */}
       <View style={styles.nextIconContainer}>
-        <MaterialIcons name="arrow-forward-ios" size={24} color="black" />
+        <MaterialIcons name="arrow-forward-ios" size={22} color="black" />
       </View>
     </View>
   );
@@ -104,29 +127,27 @@ export default Deal;
 const styles = StyleSheet.create({
   card: {
     marginVertical: 20,
-    ...GlobalStyles.shadowProperty,
     borderRadius: 20,
-    padding: 10,
+    padding: 12,
     width: 300,
     backgroundColor: "#fff",
+    ...GlobalStyles.shadowProperty,
   },
   pressed: {
-    opacity: 0.9,
+    opacity: 0.85,
   },
   imageWrapper: {
-    overflow: "hidden",
     width: "100%",
     height: 200,
     borderRadius: 14,
-    alignItems: "center",
+    overflow: "hidden",
+    backgroundColor: "#f5f5f5",
   },
   imageStyle: {
     width: "100%",
-    height: 200,
+    height: "100%",
     resizeMode: "cover",
   },
-
-  // ✅ Discount badge — top right corner
   badge: {
     position: "absolute",
     top: 16,
@@ -142,39 +163,48 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 
+  // ✅ Heart icon — top left corner over image
+  heartIcon: {
+    position: "absolute",
+    top: 16,
+    left: 16,
+    zIndex: 10,
+    backgroundColor: "rgba(255,255,255,0.85)",
+    padding: 6,
+    borderRadius: 20,
+    ...GlobalStyles.shadowProperty,
+  },
+
   content: {
     marginTop: 10,
     gap: 6,
   },
   title: {
-    fontSize: 15,
+    fontSize: 17,
     fontWeight: "600",
     color: "#1a1a1a",
   },
   description: {
-    fontSize: 12,
-    color: "#888",
+    fontSize: 13,
+    color: "#777",
     lineHeight: 18,
   },
-
-  // ✅ Price row
   priceRow: {
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
-    marginTop: 4,
+    marginTop: 6,
   },
   discountedPrice: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: "bold",
-    color: "#2ecc71", // green — offer price
+    color: "#2ecc71",
   },
   originalPrice: {
-    fontSize: 13,
+    fontSize: 14,
     color: "#aaa",
-    textDecorationLine: "line-through", // ✅ strikethrough
+    textDecorationLine: "line-through",
   },
-
   nextIconContainer: {
     position: "absolute",
     right: 10,
@@ -183,7 +213,7 @@ const styles = StyleSheet.create({
     zIndex: 10,
     padding: 8,
     borderRadius: 20,
-    backgroundColor: "rgba(255,255,255,0.6)",
+    backgroundColor: "rgba(255,255,255,0.7)",
     ...GlobalStyles.shadowProperty,
   },
 });

@@ -1,16 +1,19 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { Colors } from "../constants/Colors";
 import { FontSizes } from "../constants/FontSize";
-import { Images } from "../constants/Image";
 
-const Footer = ({ pageName = "Sign Up", mainText = "Create An Account" }) => {
+const Footer = ({
+  pageName = "Sign Up",
+  mainText = "Create An Account",
+  screen = "SignUp",
+}) => {
   const navigation = useNavigation();
   return (
     <View>
       <View style={styles.socialLoginContainer}>
-        <Text style={styles.create}>- OR Continue with</Text>
+        {/* <Text style={styles.create}>- OR Continue with</Text>
 
         <Pressable
           style={({ pressed }) => [
@@ -19,13 +22,13 @@ const Footer = ({ pageName = "Sign Up", mainText = "Create An Account" }) => {
           ]}
         >
           <Image source={Images.google} style={styles.image} />
-        </Pressable>
+        </Pressable> */}
 
         <Text style={styles.create}>
           {mainText}{" "}
           <Text
             style={styles.singUpText}
-            onPress={() => navigation.navigate("SignUp")}
+            onPress={() => navigation.replace(screen)}
           >
             {pageName}
           </Text>

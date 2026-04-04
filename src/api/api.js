@@ -1,7 +1,6 @@
 const BASE_URL = process.env.EXPO_PUBLIC_API_URL;
-console.log(BASE_URL);
 
-export const getProduct = async (endpoint = "") => {
+export const getData = async (endpoint = "") => {
   try {
     const response = await fetch(`${BASE_URL}/${endpoint}`);
 

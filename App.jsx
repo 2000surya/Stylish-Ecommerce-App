@@ -2,20 +2,21 @@ import { NavigationContainer } from "@react-navigation/native";
 import React from "react";
 import { StyleSheet, Text } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import Toast from "react-native-toast-message";
+import { Provider } from "react-redux";
 import StackScreen from "./src/navigations/StackScreen";
-
+import store from "./src/redux/Store";
 const App = () => {
   Text.defaultProps = Text.defaultProps || {};
   Text.defaultProps.allowFontScaling = false;
 
   return (
-    <SafeAreaProvider>
-      <NavigationContainer>
-        <StackScreen />
-        <Toast />
-      </NavigationContainer>
-    </SafeAreaProvider>
+    <Provider store={store}>
+      <SafeAreaProvider>
+        <NavigationContainer>
+          <StackScreen />
+        </NavigationContainer>
+      </SafeAreaProvider>
+    </Provider>
   );
 };
 

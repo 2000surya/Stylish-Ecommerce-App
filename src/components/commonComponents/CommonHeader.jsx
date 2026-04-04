@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Image, Pressable, StyleSheet, View } from "react-native";
 import Splash from "../../assets/images/splash.png";
-import { Images } from "../constants/Image";
+import { Images } from "../../constants/Image";
 const CommonHeader = () => {
   const navigation = useNavigation();
   const openDrawer = () => {
@@ -22,10 +22,8 @@ const CommonHeader = () => {
       </Pressable>
       <Image source={Splash} style={styles.imageStyle} />
       <Pressable
-        style={({ pressed }) => [
-          styles.normalbtn,
-          pressed && styles.btnOpacity,
-        ]}
+        style={({ pressed }) => [styles.normalbtn]}
+        onPress={() => navigation.navigate("HomeTabs", { screen: "Settings" })}
       >
         <Image source={Images.profile} style={styles.profileImage} />
       </Pressable>

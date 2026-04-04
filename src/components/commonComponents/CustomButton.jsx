@@ -1,7 +1,7 @@
 import React from "react";
 import { ActivityIndicator, Pressable, StyleSheet, Text } from "react-native";
-import { Colors } from "../constants/Colors";
-import { FontSizes } from "../constants/FontSize";
+import { Colors } from "../../constants/Colors";
+import { FontSizes } from "../../constants/FontSize";
 
 const CustomButton = ({ text, onPress, disable }) => {
   return (

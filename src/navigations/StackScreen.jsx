@@ -1,8 +1,9 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { onAuthStateChanged } from "firebase/auth";
 import React, { useEffect, useState } from "react";
+import AppHeader from "../components/commonComponents/AppHeader";
 import { auth } from "../config/firebase";
-
+import DetailsScreen from "../screens/DetailsScreen";
 import GetStart from "../screens/GetStart";
 import OnboardScreen from "../screens/OnboardingScreens/OnboardScreen";
 import SplashScreen from "../screens/SplashScreen";
@@ -21,7 +22,6 @@ const StackScreen = () => {
       setUser(user);
       setLoading(false);
     });
-
     return unsubscribe;
   }, []);
 
@@ -29,14 +29,53 @@ const StackScreen = () => {
 
   return (
     <Stack.Navigator
-      screenOptions={{ headerShown: false, animation: "ios_from_right" }}
+      screenOptions={{ animation: "ios_from_right" }}
       initialRouteName={user ? "Home" : "OnboardScreen"}
     >
-      <Stack.Screen name="OnboardScreen" component={OnboardScreen} />
-      <Stack.Screen name="LoginScreen" component={LoginScreen} />
-      <Stack.Screen name="SignUp" component={SignUp} />
-      <Stack.Screen name="GetStart" component={GetStart} />
-      <Stack.Screen name="Home" component={Drawer} />
+      {/* These screens hide header individually */}
+      <Stack.Screen
+        name="OnboardScreen"
+        component={OnboardScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="LoginScreen"
+        component={LoginScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SignUp"
+        component={SignUp}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="GetStart"
+        component={GetStart}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Home"
+        component={Drawer}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="ProductDetails"
+        component={DetailsScreen}
+        options={{
+          headerShown: true,
+          header: (props) => <AppHeader {...props} />,
+        }}
+      />
+      {/* <Stack.Screen
+        name="PaymentScreen"
+        component={PaymentScreen}
+        options={{
+          title: "Checkout",
+          headerShown: true,
+          header: (props) => <AppHeader {...props} />,
+        }}
+      /> */}
     </Stack.Navigator>
   );
 };

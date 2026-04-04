@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, StatusBar, StyleSheet, View } from "react-native";
+import {
+  FlatList,
+  RefreshControl,
+  StatusBar,
+  StyleSheet,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { getProduct } from "../../api/api";
+import { getData } from "../../api/api";
 import AdCard from "../../components/AdCard";
-import CommonHeader from "../../components/CommonHeader";
 import Deal from "../../components/Deal";
 import SearchBar from "../../components/SearchHeader";
 import SpecialOffer from "../../components/SpecialOffer";
+import CommonHeader from "../../components/commonComponents/CommonHeader";
 import { GlobalStyles } from "../../constants/GlobalStyles";
 import LoadingScreen from "../LoadingScreen";
 
@@ -79,18 +85,23 @@ const Home = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
   const [cards, setCards] = useState([]);
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     fetchAll();
   }, []);
 
   // ✅ Both API calls together — cleaner than two separate functions
-  const fetchAll = async () => {
+  const fetchAll = async (isRefresh = false) => {
     try {
-      setLoading(true);
+      if (isRefresh) {
+        setRefresh(true);
+      } else {
+        setLoading(true);
+      }
       const [productRes, cartRes] = await Promise.all([
-        getProduct("products"),
-        getProduct("carts"),
+        getData("products"),
+        getData("carts"),
       ]);
       setProducts(productRes.products);
       setCards(cartRes.carts);
@@ -98,47 +109,65 @@ const Home = ({ navigation }) => {
       console.log("fetchAll error:", error);
     } finally {
       setLoading(false);
+      setRefresh(false);
     }
   };
-
-  if (loading) return <LoadingScreen />;
 
   return (
     <SafeAreaView style={{ flex: 1 }} edges={["top"]}>
       <StatusBar barStyle="dark-content" />
 
-      <FlatList
-        data={[1]} // ✅ Dummy single item — we only need scroll container
-        keyExtractor={(item) => item.toString()}
-        style={styles.container}
-        showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="handled"
-        renderItem={null}
-        ListHeaderComponent={
-          <>
-            {/* Header */}
-            <View style={GlobalStyles.padding}>
-              <CommonHeader />
-            </View>
-
-            {/* Search + Categories */}
-            <SearchBar
-              value={value}
-              setValue={setValue}
-              categories={categories}
+      {loading ? (
+        <LoadingScreen />
+      ) : (
+        <FlatList
+          data={[1]} // ✅ Dummy single item — we only need scroll container
+          keyExtractor={(item) => item.toString()}
+          style={styles.container}
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+          renderItem={null}
+          refreshControl={
+            <RefreshControl
+              refreshing={refresh}
+              onRefresh={() => fetchAll(true)}
             />
+          }
+          ListHeaderComponent={
+            <>
+              {/* Header */}
+              <View style={GlobalStyles.padding}>
+                <CommonHeader />
+              </View>
 
-            {/* Banner Ad */}
-            <AdCard />
+              {/* Search + Categories */}
 
-            {/* Deal Products */}
-            <Deal data={products} />
+              <SearchBar
+                value={value}
+                setValue={setValue}
+                categories={categories}
+                navigation={navigation}
+                editable={false}
+              />
 
-            {/* Special Offers */}
-            <SpecialOffer data={cards} />
-          </>
-        }
-      />
+              {/* Banner Ad */}
+              <AdCard />
+
+              {/* Deal Products */}
+              <Deal
+                data={products}
+                onPress={(item) => {
+                  navigation.navigate("ProductDetails", { item });
+                }}
+                navigation={navigation}
+              />
+
+              {/* Special Offers */}
+              <SpecialOffer data={cards} />
+            </>
+          }
+        />
+      )}
     </SafeAreaView>
   );
 };

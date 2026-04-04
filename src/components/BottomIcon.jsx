@@ -25,7 +25,9 @@ const BottomIcon = ({ icon, name, size, focused, color }) => {
     <IconComponent
       name={name}
       size={size}
-      color={focused ? Colors.primary : Colors.black}
+      color={
+        color !== undefined ? color : focused ? Colors.primary : Colors.black
+      }
     />
   );
 };

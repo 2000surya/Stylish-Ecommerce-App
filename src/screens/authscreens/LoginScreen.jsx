@@ -4,9 +4,9 @@ import { StatusBar, StyleSheet, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AuthHeader from "../../components/AuthHeader";
-import CustomButton from "../../components/CustomButton";
-import CustomInput from "../../components/CustomInput";
 import Footer from "../../components/Footer";
+import CustomButton from "../../components/commonComponents/CustomButton";
+import CustomInput from "../../components/commonComponents/CustomInput";
 import { auth } from "../../config/firebase"; // adjust path
 import { FontSizes } from "../../constants/FontSize";
 import { GlobalStyles } from "../../constants/GlobalStyles";

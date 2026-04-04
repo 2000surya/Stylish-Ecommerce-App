@@ -7,8 +7,8 @@ import { FontSizes } from "../constants/FontSize";
 import Home from "../screens/bottomTabs/Home";
 import Search from "../screens/bottomTabs/Search";
 import Settings from "../screens/bottomTabs/Settings";
-import Shop from "../screens/bottomTabs/Shop";
 import WishList from "../screens/bottomTabs/WishList";
+import BottomStack from "./BottomStack";
 
 const BottomTab = () => {
   const Tab = createBottomTabNavigator();
@@ -16,7 +16,6 @@ const BottomTab = () => {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        animation: "shift",
         tabBarStyle: {
           height: 70,
         },
@@ -32,12 +31,7 @@ const BottomTab = () => {
         component={Home}
         options={{
           tabBarIcon: ({ size, color, focused }) => (
-            <BottomIcon
-              color={color}
-              focused={focused}
-              size={size}
-              name={"home"}
-            />
+            <BottomIcon focused={focused} size={size} name={"home"} />
           ),
           tabBarLabel: "Home",
         }}
@@ -52,17 +46,22 @@ const BottomTab = () => {
         }}
       />
       <Tab.Screen
-        name="Shop"
-        component={Shop}
+        name="BottomStack"
+        component={BottomStack}
         options={{
           tabBarLabel: "",
           tabBarIcon: ({ focused, size }) => (
-            <View style={styles.fabIcon}>
+            <View
+              style={[
+                styles.fabIcon,
+                { backgroundColor: focused ? Colors.primary : Colors.white },
+              ]}
+            >
               <BottomIcon
                 name={"shopping-cart"}
                 size={size}
-                focused={focused}
                 icon={"AntDesign"}
+                color={focused ? Colors.white : Colors.black} // ✅ FIXED
               />
             </View>
           ),
@@ -102,7 +101,6 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
-    backgroundColor: "#fff",
     borderRadius: 30,
     width: 60,
     height: 60,

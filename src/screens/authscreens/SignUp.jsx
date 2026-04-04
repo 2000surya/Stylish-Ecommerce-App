@@ -5,9 +5,9 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { SafeAreaView } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
 import AuthHeader from "../../components/AuthHeader";
-import CustomButton from "../../components/CustomButton";
-import CustomInput from "../../components/CustomInput";
 import Footer from "../../components/Footer";
+import CustomButton from "../../components/commonComponents/CustomButton";
+import CustomInput from "../../components/commonComponents/CustomInput";
 import { auth } from "../../config/firebase";
 import { Colors } from "../../constants/Colors";
 import { FontSizes } from "../../constants/FontSize";
@@ -179,7 +179,11 @@ const SignUp = ({ navigation }) => {
             disable={disable}
           />
 
-          <Footer pageName="Login" mainText="I Already Have an Account" />
+          <Footer
+            pageName="Login"
+            mainText="I Already Have an Account"
+            screen="LoginScreen"
+          />
         </View>
       </KeyboardAwareScrollView>
     </SafeAreaView>

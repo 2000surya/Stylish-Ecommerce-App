@@ -6,7 +6,6 @@ import AdCard from "./AdCard";
 import Deal from "./Deal";
 
 const SpecialOffer = ({ data }) => {
-  console.log("data", data);
   return (
     <View>
       <View style={styles.container}>
@@ -40,7 +39,7 @@ const SpecialOffer = ({ data }) => {
         bg={"#ff9aaa"}
       />
 
-      <Deal data={data} />
+      <Deal data={data} hideRating={true} />
     </View>
   );
 };

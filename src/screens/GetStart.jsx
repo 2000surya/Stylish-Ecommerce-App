@@ -7,7 +7,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import CustomButton from "../components/CustomButton";
+import CustomButton from "../components/commonComponents/CustomButton";
 import { Colors } from "../constants/Colors";
 import { FontSizes } from "../constants/FontSize";
 import { GlobalStyles } from "../constants/GlobalStyles";

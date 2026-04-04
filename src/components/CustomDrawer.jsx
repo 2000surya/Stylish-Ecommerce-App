@@ -50,7 +50,7 @@ const CustomDrawer = (props) => {
       <DrawerContentScrollView {...props}>
         {renderItem("Home", "BottomHome", "home")}
         {renderItem("Wishlist", "WishList", "heart")}
-        {renderItem("Shop", "Shop", "shopping-cart")}
+        {renderItem("Shop", "BottomStack", "shopping-cart")}
         {renderItem("Search", "Search", "search")}
       </DrawerContentScrollView>
 

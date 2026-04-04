@@ -15,32 +15,31 @@ import { FontSizes } from "../../constants/FontSize.jsx";
 import { GlobalStyles } from "../../constants/GlobalStyles.jsx";
 import { Images } from "../../constants/Image.jsx";
 
+const data = [
+  {
+    count: 1,
+    image: Images.num1,
+    text: "Choose product",
+    subText:
+      "Browse through our catalog and pick your favorite items quickly and easily.",
+  },
+  {
+    count: 2,
+    image: Images.num2,
+    text: "Make Payment",
+    subText:
+      "Pay securely using your preferred payment method in just a few clicks.",
+  },
+  {
+    count: 3,
+    image: Images.num3,
+    text: "Get Your Order",
+    subText:
+      "Sit back and relax — we deliver your order safely to your doorstep.",
+  },
+];
 const OnboardScreen = ({ navigation }) => {
   const { width } = Dimensions.get("window");
-
-  const data = [
-    {
-      count: 1,
-      image: Images.num1,
-      text: "Choose product",
-      subText:
-        "Browse through our catalog and pick your favorite items quickly and easily.",
-    },
-    {
-      count: 2,
-      image: Images.num2,
-      text: "Make Payment",
-      subText:
-        "Pay securely using your preferred payment method in just a few clicks.",
-    },
-    {
-      count: 3,
-      image: Images.num3,
-      text: "Get Your Order",
-      subText:
-        "Sit back and relax — we deliver your order safely to your doorstep.",
-    },
-  ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const flatListRef = useRef(null);
@@ -65,7 +64,7 @@ const OnboardScreen = ({ navigation }) => {
             /{data.length}
           </Text>
         </Text>
-        <Pressable onPress={() => console.log("Skip pressed")}>
+        <Pressable onPress={() => navigation.replace("LoginScreen")}>
           <Text style={styles.textStyle}>Skip</Text>
         </Pressable>
       </View>
