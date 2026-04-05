@@ -1,4 +1,4 @@
-const BASE_URL = process.env.EXPO_PUBLIC_API_URL;
+const BASE_URL = process.env.EXPO_PUBLIC_API_URL ?? "https://dummyjson.com";
 
 export const getData = async (endpoint = "") => {
   try {

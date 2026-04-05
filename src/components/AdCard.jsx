@@ -1,10 +1,13 @@
 import { AntDesign } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { Colors } from ".././constants/Colors";
 import { FontSizes } from ".././constants/FontSize";
 
 const AdCard = ({ title, subTitle, bg = "#4392f9" }) => {
+  const navigation = useNavigation();
+
   return (
     <View>
       <View style={[styles.container, { backgroundColor: bg }]}>
@@ -21,10 +24,13 @@ const AdCard = ({ title, subTitle, bg = "#4392f9" }) => {
           </View>
 
           {/* view all */}
-          <View style={[styles.row, styles.viewAllButton]}>
+          <Pressable
+            style={[styles.row, styles.viewAllButton]}
+            onPress={() => navigation.navigate("Search")}
+          >
             <Text style={styles.viewAllText}>View all</Text>
             <AntDesign name="arrow-right" size={15} color="white" />
-          </View>
+          </Pressable>
         </View>
       </View>
     </View>

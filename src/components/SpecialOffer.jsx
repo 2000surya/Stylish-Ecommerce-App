@@ -2,6 +2,7 @@ import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { Colors } from "../constants/Colors";
 import { FontSizes } from "../constants/FontSize";
+import { Images } from "../constants/Image";
 import AdCard from "./AdCard";
 import Deal from "./Deal";
 
@@ -12,12 +13,7 @@ const SpecialOffer = ({ data }) => {
         <View style={styles.row}>
           {/* image */}
           <View style={styles.ImageContainer}>
-            <Image
-              source={{
-                uri: "https://t4.ftcdn.net/jpg/04/86/72/71/240_F_486727138_LIbtjQYhz2nwYFoziXPeUIFSpdz5tiHZ.jpg",
-              }}
-              style={styles.imageStyle}
-            />
+            <Image source={Images.num3} style={styles.imageStyle} />
           </View>
           {/* text */}
           <View style={styles.textContainer}>
@@ -54,9 +50,16 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     borderRadius: 20,
   },
-  imageStyle: { width: 80, height: 80, resizeMode: "cover", borderRadius: 40 },
+  imageStyle: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
+    borderRadius: 40,
+  },
   ImageContainer: {
     overflow: "hidden",
+    width: 80,
+    height: 80,
   },
   row: {
     flexDirection: "row",

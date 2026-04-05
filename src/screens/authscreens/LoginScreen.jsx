@@ -22,6 +22,16 @@ const LoginScreen = ({ navigation }) => {
 
   const userNameHandler = (text) => {
     setUserName(text);
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!text.trim()) {
+      setUserNameError("Email is required");
+    } else if (!emailRegex.test(text)) {
+      setUserNameError("Please enter valid email");
+    } else {
+      setUserNameError(""); // ✅ CLEAR ERROR
+    }
   };
 
   const passwordHandler = (text) => {

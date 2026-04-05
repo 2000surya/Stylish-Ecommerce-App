@@ -15,17 +15,18 @@
       "softwareKeyboardLayoutMode": "pan",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/images/android-icon-foreground.png",
-        "backgroundImage": "./assets/images/android-icon-background.png",
-        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+        "foregroundImage": "./assets/images/splash_1.png",
+        "backgroundImage": "./assets/images/splash_1.png",
+        "monochromeImage": "./assets/images/splash_1.png"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "package": "com.surya9159.Stylish"
     },
+
     "web": {
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/splash_1.png"
     },
     "plugins": [
       [
@@ -47,6 +48,7 @@
       "reactCompiler": true
     },
     "extra": {
+      "apiUrl": "https://dummyjson.com",
       "eas": {
         "projectId": "1d1ee4ce-9b37-4f05-a476-38aabe23cb71"
       }

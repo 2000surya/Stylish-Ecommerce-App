@@ -91,7 +91,6 @@ const Home = ({ navigation }) => {
     fetchAll();
   }, []);
 
-  // ✅ Both API calls together — cleaner than two separate functions
   const fetchAll = async (isRefresh = false) => {
     try {
       if (isRefresh) {
@@ -121,7 +120,7 @@ const Home = ({ navigation }) => {
         <LoadingScreen />
       ) : (
         <FlatList
-          data={[1]} // ✅ Dummy single item — we only need scroll container
+          data={[1]}
           keyExtractor={(item) => item.toString()}
           style={styles.container}
           showsVerticalScrollIndicator={false}

@@ -35,7 +35,7 @@ const SignUp = ({ navigation }) => {
     if (!text.includes("@")) {
       setEmailError("please enter correct email format");
     } else {
-      setEmailError(""); // 👈 only clear when valid
+      setEmailError("");
     }
     setEmail(text);
   };
@@ -44,7 +44,7 @@ const SignUp = ({ navigation }) => {
     if (text.length < 6) {
       setPasswordError("must 6 charecter");
     } else {
-      setPasswordError(""); // 👈 else add pannu
+      setPasswordError("");
     }
     setPassword(text);
   };
@@ -60,35 +60,38 @@ const SignUp = ({ navigation }) => {
   };
 
   const createAccountHandler = async () => {
-    // Validation
+    let valid = true;
+
     if (!email.trim()) {
       setEmailError("Please enter email");
-      return;
+      valid = false;
     }
-    if (!email.includes("@")) {
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
       setEmailError("Please enter valid email");
-      return;
+      valid = false;
     }
+
     if (password.length < 6) {
       setPasswordError("Must be at least 6 characters");
-      return;
+      valid = false;
     }
+
     if (password !== confirmPassword) {
       setConfirmPassError("Passwords do not match");
-      return;
+      valid = false;
     }
-    setDisable(true);
+
+    if (!valid) return; // ✅ stop here safely
+
+    setDisable(true); // ✅ ONLY after validation
 
     try {
-      const result = await createUserWithEmailAndPassword(
-        auth,
-        email.trim(),
-        password
-      );
-      console.log(result);
+      await createUserWithEmailAndPassword(auth, email.trim(), password);
 
       Toast.show({
-        type: "success", // ✅ success
+        type: "success",
         text1: "Account Created!",
         text2: "Welcome aboard 🎉",
       });
@@ -99,24 +102,15 @@ const SignUp = ({ navigation }) => {
 
       switch (error.code) {
         case "auth/email-already-in-use":
-          Toast.show({
-            type: "error", // ❌ error
-            text1: "Email Already Used",
-            text2: "Try with different email",
-          });
+          setEmailError("Email already used");
           break;
         case "auth/invalid-email":
-          Toast.show({
-            type: "error",
-            text1: "Invalid Email",
-            text2: "Please enter correct email format",
-          });
+          setEmailError("Invalid email");
           break;
         default:
           Toast.show({
             type: "error",
             text1: "Something went wrong",
-            text2: "Please try again",
           });
       }
     }

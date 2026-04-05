@@ -26,12 +26,7 @@ const CustomInput = ({
 }) => {
   return (
     <View style={{ marginBottom: 20 }}>
-      <View
-        style={[
-          styles.row,
-          error ? styles.errorBorder : null, // 🔥 highlight border
-        ]}
-      >
+      <View style={[styles.row, error ? styles.errorBorder : null]}>
         {/* icon */}
         {password ? (
           <Fontisto name="locked" size={20} color="#555" />
@@ -42,11 +37,12 @@ const CustomInput = ({
         <TextInput
           value={value}
           onChangeText={onChange}
-          keyboardType={keyboard || "default"} // ✅ FIXED
+          keyboardType={keyboard || "default"}
           style={styles.inputStyle}
           placeholder={placeHolderText}
           secureTextEntry={password ? secure : false}
           autoCapitalize="none"
+          placeholderTextColor={Colors.gray}
         />
 
         {password && (
@@ -56,7 +52,6 @@ const CustomInput = ({
         )}
       </View>
 
-      {/* 🔥 Error Text */}
       {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
       {/* Forgot Password */}

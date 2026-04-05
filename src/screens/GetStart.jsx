@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   ImageBackground,
   StatusBar,
@@ -12,17 +12,23 @@ import { Colors } from "../constants/Colors";
 import { FontSizes } from "../constants/FontSize";
 import { GlobalStyles } from "../constants/GlobalStyles";
 import { Images } from "../constants/Image";
-
+import LoadingScreen from "../screens/LoadingScreen";
 const GetStart = ({ navigation }) => {
+  const [loading, setLoading] = useState(true);
+
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar translucent barStyle={"default"} />
+      <StatusBar translucent barStyle={"light-content"} />
 
       <ImageBackground
         source={Images.Start}
         style={styles.imageContainer}
         resizeMode="cover"
+        onLoadEnd={() => setLoading(false)} // ✅ hide loader when loaded
       >
+        {/* ✅ Loader */}
+        {loading && <LoadingScreen />}
+
         <View style={styles.overlay}>
           <View style={styles.contentBelow}>
             <Text style={styles.titleStyle}>
@@ -82,5 +88,11 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginBottom: 40,
+  },
+  loaderContainer: {
+    ...StyleSheet.absoluteFillObject,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "black", // prevents flicker
   },
 });
